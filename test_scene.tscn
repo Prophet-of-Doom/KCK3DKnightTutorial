@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://criwr7v42ohyb"]
+
+[ext_resource type="PackedScene" uid="uid://dtg4hs2xrl65s" path="res://wall_gltf.tscn" id="1_jobjo"]
+[ext_resource type="PackedScene" uid="uid://dypaauewv6b5u" path="res://knight.tscn" id="2_cmkaj"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ow8fv"]
+turbidity = 23.63
+sun_disk_scale = 23.77
+ground_color = Color(0, 0.0980392, 0.054902, 1)
+energy_multiplier = 1.6
+
+[sub_resource type="Sky" id="Sky_ak7ng"]
+sky_material = SubResource("PhysicalSkyMaterial_ow8fv")
+
+[sub_resource type="Environment" id="Environment_oxgts"]
+background_mode = 2
+background_energy_multiplier = 2.75
+sky = SubResource("Sky_ak7ng")
+ssao_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gb1t0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dw2yc"]
+albedo_color = Color(0.270588, 0.270588, 0.270588, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_melgc"]
+
+[node name="TestScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.136264, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.687785, -0.431607, 0.583667, -0.0742153, 0.758022, 0.647993, -0.722111, -0.488996, 0.489324, 1.60419, 2.92897, 3.72471)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oxgts")
+
+[node name="wall_gltf" parent="." instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.50685)
+
+[node name="wall_gltf" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.19468, 0, 1.92435)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_gb1t0")
+surface_material_override/0 = SubResource("StandardMaterial3D_dw2yc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_melgc")
+
+[node name="Knight" parent="." instance=ExtResource("2_cmkaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0739887, 0)
