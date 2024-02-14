@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://criwr7v42ohyb"]
+[gd_scene load_steps=11 format=3 uid="uid://criwr7v42ohyb"]
 
 [ext_resource type="PackedScene" uid="uid://dtg4hs2xrl65s" path="res://wall_gltf.tscn" id="1_jobjo"]
+[ext_resource type="Script" path="res://test_scene.gd" id="1_oqd80"]
 [ext_resource type="PackedScene" uid="uid://dypaauewv6b5u" path="res://knight.tscn" id="2_cmkaj"]
+[ext_resource type="Shader" path="res://testcurvature.gdshader" id="3_g1rju"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ow8fv"]
 turbidity = 23.63
@@ -20,13 +22,28 @@ ssao_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gb1t0"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dw2yc"]
-albedo_color = Color(0.270588, 0.270588, 0.270588, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkwax"]
+render_priority = 0
+shader = ExtResource("3_g1rju")
+shader_parameter/CURVATURE = 1.25
+shader_parameter/CURVATURE_ACTIVE = 1.0
+shader_parameter/CURVATURE_DISTANCE = 2.185
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_melgc"]
 
 [node name="TestScene" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.136264, 0)
+script = ExtResource("1_oqd80")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.687785, -0.431607, 0.583667, -0.0742153, 0.758022, 0.647993, -0.722111, -0.488996, 0.489324, 1.60419, 2.92897, 3.72471)
@@ -40,10 +57,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.50685)
 [node name="wall_gltf" parent="wall_gltf" instance=ExtResource("1_jobjo")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.19468, 0, 1.92435)
 
+[node name="wall_gltf2" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.82051, 0, -4.50685)
+
+[node name="wall_gltf3" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82051, 0, -4.50685)
+
+[node name="wall_gltf4" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179492, 0, -4.50685)
+
+[node name="wall_gltf5" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.17949, 0, -4.50685)
+
+[node name="wall_gltf6" parent="wall_gltf" instance=ExtResource("1_jobjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17949, 0, -4.50685)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("PlaneMesh_gb1t0")
-surface_material_override/0 = SubResource("StandardMaterial3D_dw2yc")
+surface_material_override/0 = SubResource("ShaderMaterial_xkwax")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

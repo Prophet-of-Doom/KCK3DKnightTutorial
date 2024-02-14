@@ -1,8 +1,8 @@
 extends CharacterBody3D
 class_name Knight
 
-@export var speed = 5
-@export var acceleration = 4.0
+@export var speed = 7
+@export var acceleration = 8.0
 @export var jump_speed = 8.0
 @export var rotation_speed = 12.0
 @export var mouse_sensitivity = 0.0015
@@ -38,7 +38,7 @@ func _physics_process(delta):
 		anim_tree.set("parameters/conditions/jumping", false)
 		anim_tree.set("parameters/conditions/grounded", true)
 	if not is_on_floor() and not jumping:
-		anim_tree.travel("Jump_Idle")
+		anim_state.travel("Jump_Idle")
 		anim_tree.set("parameters/conditions/grounded", false)
 	last_floor = is_on_floor()
 	
